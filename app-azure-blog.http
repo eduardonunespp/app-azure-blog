@@ -1,0 +1,6 @@
+@app_azure_blog_HostAddress = http://localhost:5281
+
+GET {{app_azure_blog_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
