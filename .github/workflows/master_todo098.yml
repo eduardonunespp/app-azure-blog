@@ -61,4 +61,9 @@ jobs:
         with:
           app-name: 'todo098'
           slot-name: 'Production'
-          package: .
+          package: ./myapp
+
+      - name: Enable Diagnostic Logs
+        run: |
+          az webapp log config --name todo098 --resource-group <your-resource-group> --application-logging filesystem --level verbose
+          az webapp log tail --name todo098 --resource-group <your-resource-group>
