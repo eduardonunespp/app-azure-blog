@@ -22,16 +22,14 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: |
-          mkdir -p ./myapp
-          dotnet publish -c Release -o ./myapp
+        run: dotnet publish -c Release -o ${{ github.workspace }}/myapp
         working-directory: .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ./myapp
+          path: ${{ github.workspace }}/myapp
 
   deploy:
     runs-on: windows-latest
@@ -61,9 +59,4 @@ jobs:
         with:
           app-name: 'todo098'
           slot-name: 'Production'
-          package: ./myapp
-
-      - name: Enable Diagnostic Logs
-        run: |
-          az webapp log config --name todo098 --resource-group <your-resource-group> --application-logging filesystem --level verbose
-          az webapp log tail --name todo098 --resource-group <your-resource-group>
+          package: ${{ github.workspace }}/myapp
