@@ -22,7 +22,9 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ./myapp
+        run: |
+          mkdir -p ./myapp
+          dotnet publish -c Release -o ./myapp
         working-directory: .
 
       - name: Upload artifact for deployment job
@@ -59,4 +61,4 @@ jobs:
         with:
           app-name: 'todo098'
           slot-name: 'Production'
-          package: ./myapp
+          package: .
